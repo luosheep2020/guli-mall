@@ -1,0 +1,16 @@
+server:
+  port: 30000
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    alicloud:
+      oss:
+        bucket: guli-mall-luosheep
+        endpoint: oss-cn-guangzhou.aliyuncs.com
+      access-key: LTAI4GB3VVBHz1oCT8Lb7EW5
+      secret-key: Ip8zPepnakqcohwk44lUKoMrGHJxc5
+  application:
+    name: mall-third-party
+
