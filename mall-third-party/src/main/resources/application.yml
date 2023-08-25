@@ -9,8 +9,8 @@ spring:
       oss:
         bucket: guli-mall-luosheep
         endpoint: oss-cn-guangzhou.aliyuncs.com
-      access-key: LTAI4GB3VVBHz1oCT8Lb7EW5
-      secret-key: Ip8zPepnakqcohwk44lUKoMrGHJxc5
+      access-key: ***
+      secret-key: ***
   application:
     name: mall-third-party
 
