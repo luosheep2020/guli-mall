@@ -12,11 +12,16 @@ import com.gulimall.product.dao.CategoryDao;
 import com.gulimall.product.entity.BrandEntity;
 import com.gulimall.product.entity.CategoryBrandRelationEntity;
 import com.gulimall.product.entity.CategoryEntity;
+import com.gulimall.product.service.BrandService;
 import com.gulimall.product.service.CategoryBrandRelationService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service("categoryBrandRelationService")
@@ -25,6 +30,11 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
     private BrandDao brandDao;
     @Resource
     private CategoryDao categoryDao;
+
+    @Resource
+    private CategoryBrandRelationDao relationDao;
+    @Resource
+    private BrandService brandService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -49,10 +59,10 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
 
     @Override
     public void updateBrand(Long brandId, String name) {
-        CategoryBrandRelationEntity relationEntity=new CategoryBrandRelationEntity();
+        CategoryBrandRelationEntity relationEntity = new CategoryBrandRelationEntity();
         relationEntity.setBrandId(brandId);
         relationEntity.setBrandName(name);
-        this.update(relationEntity,new UpdateWrapper<CategoryBrandRelationEntity>().eq("brand_id",brandId));
+        this.update(relationEntity, new UpdateWrapper<CategoryBrandRelationEntity>().eq("brand_id", brandId));
     }
 
     @Override
@@ -60,6 +70,18 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
         CategoryBrandRelationEntity relationEntity = new CategoryBrandRelationEntity();
         relationEntity.setCatelogName(name);
         this.update(relationEntity, new UpdateWrapper<CategoryBrandRelationEntity>().eq("catelog_id", catId));
+    }
+
+    @Override
+    public List<BrandEntity> getBrandsByCatId(Long catId) {
+        List<CategoryBrandRelationEntity> relationEntities = relationDao.
+                selectList(new QueryWrapper<CategoryBrandRelationEntity>().eq("catelog_id", catId));
+        if (!CollectionUtils.isEmpty(relationEntities)) {
+            // 封装品牌IDs
+            List<Long> brandIds = relationEntities.stream().map(CategoryBrandRelationEntity::getBrandId).collect(Collectors.toList());
+            return  brandDao.selectBatchIds(brandIds);
+        }
+        return new ArrayList<>();
     }
 
 }

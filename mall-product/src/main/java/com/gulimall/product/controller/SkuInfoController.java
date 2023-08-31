@@ -1,19 +1,14 @@
 package com.gulimall.product.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.gulimall.product.entity.SkuInfoEntity;
-import com.gulimall.product.service.SkuInfoService;
 import com.gulimall.common.utils.PageUtils;
 import com.gulimall.common.utils.R;
+import com.gulimall.product.entity.SkuInfoEntity;
+import com.gulimall.product.service.SkuInfoService;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.Map;
 
 
 
@@ -35,7 +30,7 @@ public class SkuInfoController {
      */
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = skuInfoService.queryPage(params);
+        PageUtils page = skuInfoService.queryPageByCondition(params);
         return R.ok().put("page", page);
     }
 

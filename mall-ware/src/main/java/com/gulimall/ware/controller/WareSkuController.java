@@ -1,20 +1,16 @@
 package com.gulimall.ware.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-
-import javax.annotation.Resource;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.gulimall.ware.entity.WareSkuEntity;
-import com.gulimall.ware.service.WareSkuService;
 import com.gulimall.common.utils.PageUtils;
 import com.gulimall.common.utils.R;
+import com.gulimall.ware.entity.WareSkuEntity;
+import com.gulimall.ware.service.WareSkuService;
+import com.gulimall.ware.vo.SkuHasStockVo;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -30,6 +26,11 @@ public class WareSkuController {
     @Resource
     private WareSkuService wareSkuService;
 
+    @PostMapping("/hasstock")
+    public R getSkuHasStock(@RequestBody List<Long> skuIds){
+        List<SkuHasStockVo> vos = wareSkuService.getSkusHasStock(skuIds);
+        return R.ok().put("page", vos);
+    }
     /**
      * 列表
      */

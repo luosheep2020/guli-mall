@@ -11,10 +11,7 @@ import com.gulimall.product.dao.AttrAttrgroupRelationDao;
 import com.gulimall.product.dao.AttrDao;
 import com.gulimall.product.dao.AttrGroupDao;
 import com.gulimall.product.dao.CategoryDao;
-import com.gulimall.product.entity.AttrAttrgroupRelationEntity;
-import com.gulimall.product.entity.AttrEntity;
-import com.gulimall.product.entity.AttrGroupEntity;
-import com.gulimall.product.entity.CategoryEntity;
+import com.gulimall.product.entity.*;
 import com.gulimall.product.service.AttrAttrgroupRelationService;
 import com.gulimall.product.service.AttrService;
 import com.gulimall.product.service.CategoryService;
@@ -210,5 +207,11 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         IPage<AttrEntity> page = this.page(new Query<AttrEntity>().getPage(params), wrapper);
         return new PageUtils(page);
     }
+
+    @Override
+    public List<Long> selectSearchAttrs(List<Long> attrIds) {
+        return   baseMapper.selectSearchAttrs(attrIds);
+    }
+
 
 }

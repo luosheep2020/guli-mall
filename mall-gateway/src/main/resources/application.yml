@@ -5,22 +5,42 @@ spring:
         - id: product_route
           uri: lb://mall-product
           predicates:
-              - Path=/api/product/**
+            - Path=/api/product/**
           filters:
-              - RewritePath=/api/(?<segment>.*),/$\{segment}
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
+        - id: member_route
+          uri: lb://mall-member
+          predicates:
+            - Path=/api/member/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
+        - id: ware_route
+          uri: lb://mall-ware
+          predicates:
+            - Path=/api/ware/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
+        - id: coupon_route
+          uri: lb://mall-coupon
+          predicates:
+            - Path=/api/coupon/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
 
         - id: third_party_route
-          uri: lb://mall-third-party
+          uri: lb://mall-third-part
           predicates:
-            - Path=/api/thirdparty/**
+            - Path=/api/thirdpart/**
           filters:
-            - RewritePath=/api/thirdparty/(?<segment>.*),/$\{segment}
+            - RewritePath=/api/thirdpart/(?<segment>.*),/$\{segment}
 
         - id: admin_route
           uri: lb://renren-fast
           predicates:
             - Path=/api/**
           filters:
-              - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
-
+            - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
 

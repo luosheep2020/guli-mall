@@ -9,6 +9,7 @@ import com.gulimall.product.service.AttrGroupService;
 import com.gulimall.product.service.AttrService;
 import com.gulimall.product.service.CategoryService;
 import com.gulimall.product.vo.AttrGroupRelationVo;
+import com.gulimall.product.vo.AttrGroupWithAttrsVo;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -48,7 +49,11 @@ public class AttrGroupController {
         List<AttrEntity> entities = attrService.getRelationAttr(attrgroupId);
         return R.ok().put("data", entities);
     }
-
+    @GetMapping("/{catelogId}/withattr")
+    public R getAttrGroupWithAttr(@PathVariable Long catelogId){
+       List<AttrGroupWithAttrsVo> vos= attrGroupService.getAttrGroupWithAttrsByCatelogId(catelogId);
+        return R.ok().put("data",vos);
+    }
     @GetMapping("/{attrgroupId}/noattr/relation")
     public R attrNoRelation(@PathVariable Long attrgroupId,
                             @RequestParam Map<String, Object> params) {
